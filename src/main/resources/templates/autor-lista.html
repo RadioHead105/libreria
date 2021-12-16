@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="es" xmls:th="http://thymeleaf.org">
+    <head>
+        <title>Lista de autores</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> Lista de autores</h1>
+        <br> 
+          <a th:href="@{http://localhost:8080/autor/cargar}" > <button>Cargar</button>
+        <table>
+            <thead>
+            <tr> 
+                <th>Id</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <p th:if="${autores.isEmpty}">No hay autores cargados para mostrar</p>
+            <th th:each=" p,iterator : ${autores}" ></th>
+            <td th:text="${iterator.index+1}"> </td>
+            <td th:text="${p.id}"> </td>
+            <td th:text="${p.nombre}"> </td>
+           
+        </tbody>
+        </table>
+       
+    </body>
+</html>

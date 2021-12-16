@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmls:th="http://thymeleaf.org">
+    <head>
+        <title> Editorial Lista </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> EDITORIAL LISTA </h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> NOMBRE </th>
+                    <th> ALTA </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="${edito : editoriales}">
+                    <td th:text="${edito.id}"> </td>
+                    <td th:text="${edito.nombre}" </td>
+                    <td th:text="${edito.alta}"> </td>
+                        
+                </tr>
+            </tbody>
+        </table>
+      
+    </body>
+</html>
