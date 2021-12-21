@@ -4,6 +4,7 @@ import com.curso.libreria.entidades.Editorial;
 import com.curso.libreria.excepciones.ErrorServicios;
 import com.curso.libreria.repositorio.EditorialRepositorio;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,25 @@ public class EditorialServicio {
             throw new ErrorServicios("La editorial ya se encuentra en la base de datos");
         }
     }
+    
+    @Transactional
+    public Editorial registrar(String nombre, String id) throws ErrorServicios {
+        
+        validar(nombre);
+
+        Optional <Editorial> editorial = editorialRepositorio.findById(id);
+
+        if (editorial.isPresent()) {
+            
+           Editorial editorial1 = editorial.get();
+            editorial1.setNombre(nombre);
+            editorialRepositorio.save(editorial1);
+            return editorial1;
+        } else {
+            throw new ErrorServicios("La editorial no se encuentra en la base de datos");
+        }
+    }
+    
     
     public List<Editorial> listarAll(){
         return editorialRepositorio.findAll();

@@ -6,14 +6,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1> EDITORIAL CARGAR </h1>
-        <p th:text="${error}"> </p>
-        <p th:text="${correcto}"> </p>
-        <form th:action="@{/editorial/guardar}" method="POST">
-            <label> NOMBRE </label>
-            <input type="text" name="nombre">      
-            <button type="submit"> ENVIAR </button>
-        </form>
+       
         
+        
+        <form th:action="@{/editorial/guardar}" method="POST" th:object="${editorial}">
+           <header>
+            <h1 th:if="${editorial.id == null}">Crear editorial</h1>
+            <h1 th:if="${editorial.id != null}">Editar editorial</h1>
+           </header>
+            <div>
+                <input hidden th:field="${editorial.id}"
+                <div>
+                    <label> Nombre </label> <br>
+                    <input type="text" name="nombre">  
+                 </div>
+                <button type="submit"> Enviar </button>
+             </div>
+         
+        </form>
+            <p th:text="${error}"> </p>
+            <p th:text="${correcto}"> </p>
+        
+        
+        <br>
+        <a href="http://localhost:8080/editorial/lista"> <button>Volver</button> </a>
     </body>
 </html>

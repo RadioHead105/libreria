@@ -11,20 +11,26 @@
         <table>
             <thead>
                 <tr>
-                    <th> ID </th>
+                    <th> N° </th>
                     <th> NOMBRE </th>
                     <th> ALTA </th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="${edito : editoriales}">
-                    <td th:text="${edito.id}"> </td>
+                <tr th:each="edito, iterator : ${editoriales}">
+                    <td th:text="${iterator.index+1}"> </td>
                     <td th:text="${edito.nombre}" </td>
                     <td th:text="${edito.alta}"> </td>
-                        
+            <a href="http://localhost:8080/cargar"> <button>Editar</button> </a>   
                 </tr>
+                
             </tbody>
         </table>
-      
+        <p th:if="${editoriales.isEmpty}" th:text=" 'No hay editoriales cargadas aún' "> </p>
+        
     </body>
+    <br>
+    
+    <a href="http://localhost:8080/"><button>Volver</button></a>
+    <a href="http://localhost:8080/editorial/cargar"> <button>Cargar</button> </a>
 </html>
