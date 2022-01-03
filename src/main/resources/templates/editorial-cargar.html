@@ -10,22 +10,24 @@
         
         
         <form th:action="@{/editorial/guardar}" method="POST" th:object="${editorial}">
-           <header>
+         
             <h1 th:if="${editorial.id == null}">Crear editorial</h1>
             <h1 th:if="${editorial.id != null}">Editar editorial</h1>
-           </header>
-            <div>
-                <input hidden th:field="${editorial.id}"
-                <div>
+           
+               
+                    <input hidden th:field="${editorial.id}">
+               
+                    <input hidden th:field="${editorial.alta}">
+                
                     <label> Nombre </label> <br>
-                    <input type="text" name="nombre">  
-                 </div>
-                <button type="submit"> Enviar </button>
-             </div>
+                    <input th:field="${editorial.nombre}" type=text>  
+                    <br>
+                    <button type="submit"> Enviar </button>
+               
          
         </form>
             <p th:text="${error}"> </p>
-            <p th:text="${correcto}"> </p>
+            <p th:text="${sucess}"> </p>
         
         
         <br>

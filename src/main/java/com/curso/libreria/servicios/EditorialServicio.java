@@ -22,63 +22,55 @@ public class EditorialServicio {
     }
     
     @Transactional
-    public Editorial registrar(String nombre) throws ErrorServicios {
+    public Editorial registrar(Editorial editorial) throws ErrorServicios {
         
-        validar(nombre);
-
-        Editorial editorial = editorialRepositorio.buscarxNombre(nombre);
-
-        if (editorial == null) {
-            Editorial editorial1 = new Editorial();
-            editorial1.setNombre(nombre);
-            editorial1.setAlta(true);
-            editorialRepositorio.save(editorial1);
-            return editorial1;
-        } else {
-            throw new ErrorServicios("La editorial ya se encuentra en la base de datos");
-        }
-    }
-    
-    @Transactional
-    public Editorial registrar(String nombre, String id) throws ErrorServicios {
+        validar(editorial.getNombre());
         
-        validar(nombre);
-
-        Optional <Editorial> editorial = editorialRepositorio.findById(id);
-
-        if (editorial.isPresent()) {
+      
+        if(editorial.getId().isEmpty()){   //si el id esta vacío significa que 
+                                                //voy a cargar una editorial nueva
+            if(null == editorialRepositorio.buscarxNombre(editorial.getNombre())){
+                editorial.setAlta(true);
+                editorialRepositorio.save(editorial);
             
-           Editorial editorial1 = editorial.get();
-            editorial1.setNombre(nombre);
-            editorialRepositorio.save(editorial1);
-            return editorial1;
-        } else {
-            throw new ErrorServicios("La editorial no se encuentra en la base de datos");
-        }
+            }  else {                                                          
+                  throw new ErrorServicios("La editorial ya se encuentra en la base de datos.");
+            }
+            
+        }      
+                                        //si el id no esta vacío, significa que vamos a editar una editorial
+        if(!editorial.getId().isEmpty()){   
+                        //evita que modifiquemos una editorial con un nombre ya cargado || salvo que sea la misma editorial a modificar     
+            if(null == editorialRepositorio.buscarxNombre(editorial.getNombre()) || (editorialRepositorio.buscarxNombre(editorial.getNombre())).getNombre().equals((findById(editorial.getId())).getNombre())){
+            
+                editorialRepositorio.save(editorial);          
+            } else {
+                throw new ErrorServicios("La editorial ya se encuentra en la base de datos.");
+            }
+        }       
+              return editorial;
     }
     
+    
+    public Editorial findById(String id) throws ErrorServicios{
+        
+       Optional<Editorial> optionalEditorial = editorialRepositorio.findById(id);
+        
+       if(optionalEditorial.isPresent()){
+           return optionalEditorial.get();
+           
+       } else{
+           throw new ErrorServicios("La editorial no se encuentra en la base de datos");
+       }
+               
+    }
+     
     
     public List<Editorial> listarAll(){
         return editorialRepositorio.findAll();
     }
  
-//    @Transactional
-// public Editorial modificar(String nombre, String nombreNuevo) throws ErrorServicios{
-//     validar(nombre);
-//             
-//        Editorial editorial =  editorialRepositorio.buscarxNombre(nombre);           
-//        
-//        if (editorial != null){
-//         editorial.setNombre(nombreNuevo);
-//        editorialRepositorio.save(editorial);
-//        return editorial;
-//        
-//        } else {
-//            
-//        throw new ErrorServicios("No existe en la base de datos la editorial ingresada");
-//        }                 
-//     }
-// 
+
 //  @Transactional
 // public void dardeBaja(String nombre) throws ErrorServicios{
 //        
